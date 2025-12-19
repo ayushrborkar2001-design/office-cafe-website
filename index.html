@@ -48,7 +48,7 @@
 document.getElementById("serviceForm").addEventListener("submit", function(e){
   e.preventDefault();
 
-  fetch("PASTE_APPS_SCRIPT_URL_HERE", {
+  fetch("https://script.google.com/macros/s/AKfycbwLaPJqwfsmYCawPbgB7UfzUK0zfy6_cS2xflvkW4Km94RJ31qv8cUmLPBuSe26377T/exec", {
     method: "POST",
     body: JSON.stringify({
       name: document.getElementById("name").value,

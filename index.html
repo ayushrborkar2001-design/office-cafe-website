@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Office Cafe Services</title>
+  <style>
+    body { font-family: Arial; background:#f5f5f5; padding:20px; }
+    h1 { text-align:center; }
+    .box { background:#fff; padding:20px; border-radius:8px; max-width:400px; margin:auto; }
+    input, select, button {
+      width:100%; padding:10px; margin:8px 0;
+    }
+    button {
+      background:#28a745; color:#fff; border:none; font-size:16px;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>Office Cafe</h1>
+
+<div class="box">
+  <h3>Available Services</h3>
+
+  <form id="serviceForm">
+    <input type="text" id="name" placeholder="Your Name" required>
+    <input type="tel" id="mobile" placeholder="Mobile Number" required>
+
+    <select id="service" required>
+      <option value="">Select Service</option>
+      <option>Aadhaar Card Print</option>
+      <option>PAN Card</option>
+      <option>Voter ID Card</option>
+      <option>Income Certificate</option>
+      <option>Domicile Certificate</option>
+      <option>Nationality Certificate</option>
+      <option>Caste Certificate</option>
+      <option>Other Government Documents</option>
+    </select>
+
+    <button type="submit">Submit Request</button>
+  </form>
+
+  <p id="msg"></p>
+</div>
+
+<script>
+document.getElementById("serviceForm").addEventListener("submit", function(e){
+  e.preventDefault();
+
+  fetch("PASTE_APPS_SCRIPT_URL_HERE", {
+    method: "POST",
+    body: JSON.stringify({
+      name: document.getElementById("name").value,
+      mobile: document.getElementById("mobile").value,
+      service: document.getElementById("service").value
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById("msg").innerHTML =
+      "✅ Request submitted. We will contact you soon.";
+    document.getElementById("serviceForm").reset();
+  });
+});
+</script>
+
+</body>
+</html>

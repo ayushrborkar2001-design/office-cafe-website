@@ -26,7 +26,7 @@
     <input type="text" id="name" placeholder="Your Name" required>
     <input type="tel" id="mobile" placeholder="Mobile Number" required>
 
-    <select id="service" required>
+   <select id="service" required onchange="checkOther()">
       <option value="">Select Service</option>
       <option>Aadhaar Card Print</option>
       <option>PAN Card</option>
@@ -71,12 +71,13 @@ document.getElementById("serviceForm").addEventListener("submit", function(e){
     headers: {
       "Content-Type": "text/plain;charset=utf-8"
     },
-    body: JSON.stringify({
-      name: document.getElementById("name").value,
-      mobile: document.getElementById("mobile").value,
-      service: document.getElementById("service").value,
-      message: document.getElementById("otherDoc")?.value || ""
-    })
+   body: JSON.stringify({
+  name: document.getElementById("name").value,
+  mobile: document.getElementById("mobile").value,
+  service: document.getElementById("service").value,
+  message: document.getElementById("otherDoc").value
+})
+
   })
   .then(res => res.text())
   .then(txt => {
@@ -99,6 +100,21 @@ document.getElementById("serviceForm").addEventListener("submit", function(e){
     btn.innerText = "Submit Request";
   });
 });
+</script>
+<script>
+function checkOther() {
+  const service = document.getElementById("service").value;
+  const otherBox = document.getElementById("otherDoc");
+
+  if (service === "Other Document") {
+    otherBox.style.display = "block";
+    otherBox.required = true;
+  } else {
+    otherBox.style.display = "none";
+    otherBox.required = false;
+    otherBox.value = "";
+  }
+}
 </script>
 
 

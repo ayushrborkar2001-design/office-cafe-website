@@ -47,10 +47,22 @@
 
 
 <script>
+let alreadySubmitted = false;
+
 document.getElementById("serviceForm").addEventListener("submit", function(e){
   e.preventDefault();
 
+  const msg = document.getElementById("msg");
   const btn = document.getElementById("submitBtn");
+
+  // 🔴 If already submitted once
+  if (alreadySubmitted) {
+    msg.innerHTML =
+      "❌ काहीतरी चूक झाली. पुन्हा प्रयत्न करा.";
+    return;
+  }
+
+  // First time submit
   btn.disabled = true;
   btn.innerText = "Submitting...";
 
@@ -69,21 +81,25 @@ document.getElementById("serviceForm").addEventListener("submit", function(e){
   .then(res => res.text())
   .then(txt => {
     if (txt === "success") {
-      document.getElementById("msg").innerHTML =
+      alreadySubmitted = true; // ✅ LOCK submission
+
+      msg.innerHTML =
         "✅ धन्यवाद!<br>Office Cafe लवकरच संपर्क करेल 🙏";
-      document.getElementById("serviceForm").reset();
     } else {
-      throw new Error("Server error");
+      msg.innerHTML =
+        "❌ काहीतरी चूक झाली. पुन्हा प्रयत्न करा.";
+      btn.disabled = false;
+      btn.innerText = "Submit Request";
     }
   })
-  .catch(err => {
-    alert("❌ काहीतरी चूक झाली. पुन्हा प्रयत्न करा.");
+  .catch(() => {
+    msg.innerHTML =
+      "❌ काहीतरी चूक झाली. पुन्हा प्रयत्न करा.";
     btn.disabled = false;
     btn.innerText = "Submit Request";
   });
 });
 </script>
-
 
 
 

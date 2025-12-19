@@ -44,12 +44,21 @@
   <p id="msg"></p>
 </div>
 
+
 <script>
 document.getElementById("serviceForm").addEventListener("submit", function(e){
   e.preventDefault();
 
+  // Disable submit button immediately
+  const btn = document.getElementById("submitBtn");
+  btn.disabled = true;
+  btn.innerText = "Submitting...";
+
   fetch("https://script.google.com/macros/s/AKfycbwLaPJqwfsmYCawPbgB7UfzUK0zfy6_cS2xflvkW4Km94RJ31qv8cUmLPBuSe26377T/exec", {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
     body: JSON.stringify({
       name: document.getElementById("name").value,
       mobile: document.getElementById("mobile").value,
@@ -61,9 +70,16 @@ document.getElementById("serviceForm").addEventListener("submit", function(e){
     document.getElementById("msg").innerHTML =
       "✅ धन्यवाद!<br>Office Cafe लवकरच संपर्क करेल 🙏";
     document.getElementById("serviceForm").reset();
+  })
+  .catch(err => {
+    alert("❌ काहीतरी चूक झाली. पुन्हा प्रयत्न करा.");
+    btn.disabled = false;
+    btn.innerText = "Submit Request";
   });
 });
 </script>
+
+
 
 </body>
 </html>
